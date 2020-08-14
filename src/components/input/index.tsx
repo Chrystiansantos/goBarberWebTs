@@ -5,6 +5,7 @@ import React, {
   useState,
   useCallback,
 } from 'react';
+import { FiAlertCircle } from 'react-icons/fi';
 import { IconBaseProps } from 'react-icons';
 import { useField } from '@unform/core';
 
@@ -49,7 +50,7 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
 
   return (
     /* dessa forma estou pegando todas as propriedade e passango para dentro do button */
-    <Container isField={isField} isFocused={isFocused}>
+    <Container isErrored={!!error} isField={isField} isFocused={isFocused}>
       {Icon && <Icon size={20} />}
       <input
         onFocus={handleInputFocus}
@@ -59,7 +60,7 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
         ref={inputRef}
         {...rest}
       />
-      {error}
+      {error && <FiAlertCircle color="#c33030" size={20} />}
     </Container>
   );
 };
