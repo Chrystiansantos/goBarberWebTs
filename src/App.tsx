@@ -1,7 +1,8 @@
 import React from 'react';
 import GlobalStyle from './styles/global';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from './hooks/AuthContext';
 
+import ToastContainer from './components/ToastContainer';
 import SignIn from './pages/signin';
 // import SignUp from './pages/signUp';
 
@@ -11,6 +12,7 @@ const App: React.FC = () => (
       <SignIn />
     </AuthProvider>
     <GlobalStyle />
+    <ToastContainer />
   </>
 );
 

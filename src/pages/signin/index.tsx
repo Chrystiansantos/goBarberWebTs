@@ -9,7 +9,7 @@ import Input from '../../components/input';
 import Button from '../../components/button';
 import getValidationErros from '../../Utils/getValidationErrors';
 
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/AuthContext';
 
 interface SignInFormData {
   email: string;
@@ -40,10 +40,11 @@ const SignIn: React.FC = () => {
         });
         signIn({ email: data.email, password: data.password });
       } catch (error) {
-        const erros = getValidationErros(error);
-        console.log(error);
-        console.log(erros);
-        formRef.current?.setErrors(erros);
+        if (error instanceof Yup.ValidationError) {
+          const erros = getValidationErros(error);
+          formRef.current?.setErrors(erros);
+        }
+        // Disparar um toast
       }
     },
     [signIn],
