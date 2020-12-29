@@ -1,5 +1,5 @@
-import React, { useRef, useCallback } from 'react';
-import { FiLogIn, FiMail } from 'react-icons/fi';
+import React, { useRef, useCallback, useState } from 'react';
+import { FiMail } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
@@ -11,6 +11,7 @@ import Button from '../../components/button';
 import getValidationErros from '../../Utils/getValidationErrors';
 
 import { useToast } from '../../hooks/ToastContext';
+import api from '../../service/api';
 
 interface ForgotPasswordFormData {
   email: string;
@@ -18,12 +19,13 @@ interface ForgotPasswordFormData {
 
 const ForgotPassword: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-
+  const [loading, setLoading] = useState<boolean>(false);
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: ForgotPasswordFormData) => {
       try {
+        setLoading(true);
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -37,7 +39,16 @@ const ForgotPassword: React.FC = () => {
         });
 
         // recuperacao de senha
+        await api.post('/password/forgot', {
+          email: data.email,
+        });
 
+        addToast({
+          type: 'success',
+          title: 'E-mail de recuperação enviado',
+          description:
+            'Enviamos um e-mail para confirmar a recuperação de senha cheque sua caixa de entrada',
+        });
         // history.push('/dashboard');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
@@ -52,6 +63,8 @@ const ForgotPassword: React.FC = () => {
           description:
             'Ocorreu um erro ao tentar realizar a recuperação de senha, tente novamente',
         });
+      } finally {
+        setLoading(false);
       }
     },
     [addToast],
@@ -70,7 +83,9 @@ const ForgotPassword: React.FC = () => {
               type="text"
               placeholder="E-mail"
             />
-            <Button type="submit">Recuperar</Button>
+            <Button loading={loading} type="submit">
+              Recuperar
+            </Button>
             <Link to="/">Voltar ao login</Link>
           </Form>
         </AnimationContainer>
