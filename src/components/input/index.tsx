@@ -14,9 +14,15 @@ import { Container, Error } from './styles';
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   icon?: React.ComponentType<IconBaseProps>;
+  containerStyle?: object;
 }
 
-const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
+const Input: React.FC<InputProps> = ({
+  name,
+  containerStyle = {},
+  icon: Icon,
+  ...rest
+}) => {
   const { fieldName, defaultValue, error, registerField } = useField(name);
 
   const [isFocused, setIsFocused] = useState(false);
@@ -50,7 +56,12 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
 
   return (
     /* dessa forma estou pegando todas as propriedade e passango para dentro do button */
-    <Container isErrored={!!error} isField={isField} isFocused={isFocused}>
+    <Container
+      style={containerStyle}
+      isErrored={!!error}
+      isField={isField}
+      isFocused={isFocused}
+    >
       {Icon && <Icon size={20} />}
       <input
         onFocus={handleInputFocus}

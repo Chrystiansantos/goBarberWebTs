@@ -4,6 +4,7 @@ import { isToday, format, parseISO, isAfter } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import 'react-day-picker/lib/style.css';
 import { FiClock, FiPower } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import {
   Container,
   Header,
@@ -130,13 +131,17 @@ const Dashboard: React.FC = () => {
       <Header>
         <HeaderContent>
           <img src={logoImg} alt="GoBarber" />
+
           <Profile>
             <img src={user.avatar_url} alt={user.name} />
             <div>
               <span>Bem-vindo,</span>
-              <strong>{user.name}</strong>
+              <Link to="/profile">
+                <strong>{user.name}</strong>
+              </Link>
             </div>
           </Profile>
+
           <button type="button">
             <FiPower onClick={signOut} />
           </button>

@@ -32,6 +32,7 @@ export const HeaderContent = styled.div`
 `;
 
 export const Profile = styled.div`
+  text-decoration: none;
   display: flex;
   align-items: center;
   margin-left: 80px;
@@ -50,8 +51,13 @@ export const Profile = styled.div`
     span {
       color: #f4ede8;
     }
-    strong {
+    a {
       color: #ff9000;
+      text-decoration: none;
+
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 `;
