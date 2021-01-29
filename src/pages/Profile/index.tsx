@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useCallback, useRef } from 'react';
+import React, { ChangeEvent, useCallback, useRef } from 'react';
 import { FiUser, FiMail, FiLock, FiCamera, FiArrowLeft } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -28,6 +28,7 @@ const Profile: React.FC = () => {
   const { addToast } = useToast();
   const history = useHistory();
   const { user, updatedUser } = useAuth();
+
   // Essa funcao recebe os dados do form
   const handleSubmit = useCallback(
     async (data: ProfileFormData) => {
